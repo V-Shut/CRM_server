@@ -36,6 +36,19 @@ app.get('/products', (req, res) => {
   res.json(data.products);
 });
 
+app.get('/products/:id', (req, res) => {
+  const productId = req.params.id;
+  const data = readData();
+
+  const product = data.products.find(product => product.id === productId);
+
+  if (!product) {
+    return res.status(404).json({ success: false, error: "Product not found" });
+  }
+
+  res.json(product);
+});
+
 app.post('/products', (req, res) => {
   const newProduct = req.body;
 
